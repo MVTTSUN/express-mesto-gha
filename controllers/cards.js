@@ -42,7 +42,8 @@ const putLikeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
-    { new: true }
+    { new: true },
+    { runValidators: true }
   )
     .then((card) => {
       if (card) {
@@ -54,7 +55,7 @@ const putLikeCard = (req, res) => {
       }
     })
     .catch((err) => {
-      if (err instanceof mongoose.Error.DocumentNotFoundError) {
+      if (err instanceof mongoose.Error.CastError) {
         res
           .status(codesError.INCORRECT_DATA)
           .send({ message: 'Передан несуществующий _id карточки' });
@@ -80,7 +81,7 @@ const deleteLikeCard = (req, res) => {
       }
     })
     .catch((err) => {
-      if (err instanceof mongoose.Error.DocumentNotFoundError) {
+      if (err instanceof mongoose.Error.CastError) {
         res
           .status(codesError.INCORRECT_DATA)
           .send({ message: 'Передан несуществующий _id карточки' });
