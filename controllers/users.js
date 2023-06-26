@@ -12,12 +12,20 @@ const getUsers = (req, res) => {
 
 const getUser = (req, res) => {
   User.findById(req.params.userId)
-    .then((user) => res.send({ data: user }))
-    .catch((err) => {
-      if (err instanceof mongoose.Error.DocumentNotFoundError) {
+    .then((user) => {
+      if (user) {
         res
           .status(codesError.NOT_FOUND_DATA)
           .send({ message: 'Пользователь по указанному _id не найден' });
+      } else {
+        res.send({ data: user });
+      }
+    })
+    .catch((err) => {
+      if (err instanceof mongoose.Error.ValidationError) {
+        res.status(codesError.INCORRECT_DATA).send({
+          message: 'Переданы некорректные данные при создании пользователя',
+        });
       } else {
         res.status(codesError.DEFAULT).send({ message: 'Ошибка по-умолчанию' });
       }
