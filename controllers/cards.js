@@ -54,7 +54,7 @@ const putLikeCard = (req, res) => {
       }
     })
     .catch((err) => {
-      if (err instanceof mongoose.Error.DocumentNotFoundError) {
+      if (err instanceof mongoose.Error.CastError) {
         res
           .status(codesError.NOT_FOUND_DATA)
           .send({ message: 'Передан несуществующий _id карточки' });
@@ -80,7 +80,7 @@ const deleteLikeCard = (req, res) => {
       }
     })
     .catch((err) => {
-      if (err instanceof mongoose.Error.DocumentNotFoundError) {
+      if (err instanceof mongoose.Error.CastError) {
         res
           .status(codesError.NOT_FOUND_DATA)
           .send({ message: 'Передан несуществующий _id карточки' });
