@@ -34,6 +34,8 @@ const deleteCard = (req, res) => {
         res
           .status(codesError.NOT_FOUND_DATA)
           .send({ message: 'Карточка с указанным _id не найдена' });
+      } else {
+        res.status(codesError.DEFAULT).send({ message: 'Ошибка по-умолчанию' });
       }
     });
 };
