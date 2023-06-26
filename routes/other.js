@@ -3,7 +3,7 @@ const { codesError } = require('../const');
 
 router.use('*', (req, res) => {
   res
-    .status(codesError.INCORRECT_DATA)
+    .status(codesError.NOT_FOUND_DATA)
     .send({ message: 'Передан некорректный путь' });
 });
 
