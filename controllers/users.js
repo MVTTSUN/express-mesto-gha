@@ -22,7 +22,7 @@ const getUser = (req, res) => {
       }
     })
     .catch((err) => {
-      if (err instanceof mongoose.Error.ValidationError) {
+      if (err instanceof mongoose.Error.CastError) {
         res.status(codesError.INCORRECT_DATA).send({
           message: 'Переданы некорректные данные при создании пользователя',
         });
