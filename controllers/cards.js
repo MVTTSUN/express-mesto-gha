@@ -28,12 +28,20 @@ const postCard = (req, res) => {
 
 const deleteCard = (req, res) => {
   Card.findByIdAndRemove(req.params.cardId)
-    .then((card) => res.send({ data: card }))
-    .catch((err) => {
-      if (err instanceof mongoose.Error.DocumentNotFoundError) {
+    .then((card) => {
+      if (card) {
+        res.send({ data: card });
+      } else {
         res
           .status(codesError.NOT_FOUND_DATA)
           .send({ message: 'Карточка с указанным _id не найдена' });
+      }
+    })
+    .catch((err) => {
+      if (err instanceof mongoose.Error.CastError) {
+        res.status(codesError.INCORRECT_DATA).send({
+          message: 'Переданы некорректные данные',
+        });
       } else {
         res.status(codesError.DEFAULT).send({ message: 'Ошибка по-умолчанию' });
       }
