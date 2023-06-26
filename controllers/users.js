@@ -14,11 +14,11 @@ const getUser = (req, res) => {
   User.findById(req.params.userId)
     .then((user) => {
       if (user) {
+        res.send({ data: user });
+      } else {
         res
           .status(codesError.NOT_FOUND_DATA)
           .send({ message: 'Пользователь по указанному _id не найден' });
-      } else {
-        res.send({ data: user });
       }
     })
     .catch((err) => {
