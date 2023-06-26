@@ -6,7 +6,7 @@ const getCards = (req, res) => {
   Card.find({})
     .then((cards) => res.send({ data: cards }))
     .catch(() => {
-      res.status(codesError.DEFAULT).send({ message: 'Ошибка по-умолчанию' });
+      res.status(codesError.DEFAULT).send({ message: 'На сервере произошла ошибка' });
     });
 };
 
@@ -21,7 +21,7 @@ const postCard = (req, res) => {
           message: 'Переданы некорректные данные при создании карточки',
         });
       } else {
-        res.status(codesError.DEFAULT).send({ message: 'Ошибка по-умолчанию' });
+        res.status(codesError.DEFAULT).send({ message: 'На сервере произошла ошибка' });
       }
     });
 };
@@ -43,7 +43,7 @@ const deleteCard = (req, res) => {
           message: 'Переданы некорректные данные',
         });
       } else {
-        res.status(codesError.DEFAULT).send({ message: 'Ошибка по-умолчанию' });
+        res.status(codesError.DEFAULT).send({ message: 'На сервере произошла ошибка' });
       }
     });
 };
@@ -69,7 +69,7 @@ const putLikeCard = (req, res) => {
           message: 'Переданы некорректные данные для постановки лайка',
         });
       } else {
-        res.status(codesError.DEFAULT).send({ message: 'Ошибка по-умолчанию' });
+        res.status(codesError.DEFAULT).send({ message: 'На сервере произошла ошибка' });
       }
     });
 };
@@ -95,7 +95,7 @@ const deleteLikeCard = (req, res) => {
           message: 'Переданы некорректные данные для снятия лайка',
         });
       } else {
-        res.status(codesError.DEFAULT).send({ message: 'Ошибка по-умолчанию' });
+        res.status(codesError.DEFAULT).send({ message: 'На сервере произошла ошибка' });
       }
     });
 };

@@ -6,7 +6,9 @@ const getUsers = (req, res) => {
   User.find({})
     .then((users) => res.send({ data: users }))
     .catch(() => {
-      res.status(codesError.DEFAULT).send({ message: 'Ошибка по-умолчанию' });
+      res
+        .status(codesError.DEFAULT)
+        .send({ message: 'На сервере произошла ошибка' });
     });
 };
 
@@ -27,7 +29,9 @@ const getUser = (req, res) => {
           message: 'Переданы некорректные данные при создании пользователя',
         });
       } else {
-        res.status(codesError.DEFAULT).send({ message: 'Ошибка по-умолчанию' });
+        res
+          .status(codesError.DEFAULT)
+          .send({ message: 'На сервере произошла ошибка' });
       }
     });
 };
@@ -43,7 +47,9 @@ const postUser = (req, res) => {
           message: 'Переданы некорректные данные при создании пользователя',
         });
       } else {
-        res.status(codesError.DEFAULT).send({ message: 'Ошибка по-умолчанию' });
+        res
+          .status(codesError.DEFAULT)
+          .send({ message: 'На сервере произошла ошибка' });
       }
     });
 };
@@ -61,7 +67,9 @@ const patchUser = (req, res, data) => {
           .status(codesError.NOT_FOUND_DATA)
           .send({ message: 'Пользователь с указанным _id не найден' });
       } else {
-        res.status(codesError.DEFAULT).send({ message: 'Ошибка по-умолчанию' });
+        res
+          .status(codesError.DEFAULT)
+          .send({ message: 'На сервере произошла ошибка' });
       }
     });
 };
