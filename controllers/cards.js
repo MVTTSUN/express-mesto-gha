@@ -42,8 +42,7 @@ const putLikeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
-    { new: true },
-    { runValidators: true }
+    { new: true }
   )
     .then((card) => {
       if (card) {
@@ -55,7 +54,7 @@ const putLikeCard = (req, res) => {
       }
     })
     .catch((err) => {
-      if (err instanceof mongoose.Error.ValidationError) {
+      if (err instanceof mongoose.Error.CastError) {
         res.status(codesError.INCORRECT_DATA).send({
           message: 'Переданы некорректные данные для постановки лайка',
         });
@@ -69,8 +68,7 @@ const deleteLikeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } },
-    { new: true },
-    { runValidators: true }
+    { new: true }
   )
     .then((card) => {
       if (card) {
@@ -82,9 +80,9 @@ const deleteLikeCard = (req, res) => {
       }
     })
     .catch((err) => {
-      if (err instanceof mongoose.Error.ValidationError) {
+      if (err instanceof mongoose.Error.CastError) {
         res.status(codesError.INCORRECT_DATA).send({
-          message: 'Переданы некорректные данные для постановки лайка',
+          message: 'Переданы некорректные данные для снятия лайка',
         });
       } else {
         res.status(codesError.DEFAULT).send({ message: 'Ошибка по-умолчанию' });
