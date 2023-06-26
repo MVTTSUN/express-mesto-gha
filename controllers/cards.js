@@ -45,17 +45,19 @@ const putLikeCard = (req, res) => {
     { new: true }
   )
     .then((card) => {
-      res.send({ data: card });
+      if (card) {
+        res.send({ data: card });
+      } else {
+        res
+          .status(codesError.NOT_FOUND_DATA)
+          .send({ message: 'Передан несуществующий _id карточки' });
+      }
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
         res.status(codesError.INCORRECT_DATA).send({
           message: 'Переданы некорректные данные для постановки лайка',
         });
-      } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
-        res
-          .status(codesError.NOT_FOUND_DATA)
-          .send({ message: 'Передан несуществующий _id карточки' });
       } else {
         res.status(codesError.DEFAULT).send({ message: 'Ошибка по-умолчанию' });
       }
@@ -69,17 +71,19 @@ const deleteLikeCard = (req, res) => {
     { new: true }
   )
     .then((card) => {
-      res.send({ data: card });
+      if (card) {
+        res.send({ data: card });
+      } else {
+        res
+          .status(codesError.NOT_FOUND_DATA)
+          .send({ message: 'Передан несуществующий _id карточки' });
+      }
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
         res.status(codesError.INCORRECT_DATA).send({
           message: 'Переданы некорректные данные для постановки лайка',
         });
-      } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
-        res
-          .status(codesError.NOT_FOUND_DATA)
-          .send({ message: 'Передан несуществующий _id карточки' });
       } else {
         res.status(codesError.DEFAULT).send({ message: 'Ошибка по-умолчанию' });
       }
