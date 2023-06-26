@@ -42,22 +42,19 @@ const putLikeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
-    { new: true },
-    { runValidators: true }
+    { new: true }
   )
     .then((card) => {
-      if (card) {
-        res.send({ data: card });
-      } else {
-        res.status(codesError.NOT_FOUND_DATA).send({
-          message: 'Переданы некорректные данные для постановки лайка',
-        });
-      }
+      res.send({ data: card });
     })
     .catch((err) => {
-      if (err instanceof mongoose.Error.CastError) {
+      if (err instanceof mongoose.Error.ValidationError) {
+        res.status(codesError.INCORRECT_DATA).send({
+          message: 'Переданы некорректные данные для постановки лайка',
+        });
+      } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
         res
-          .status(codesError.INCORRECT_DATA)
+          .status(codesError.NOT_FOUND_DATA)
           .send({ message: 'Передан несуществующий _id карточки' });
       } else {
         res.status(codesError.DEFAULT).send({ message: 'Ошибка по-умолчанию' });
@@ -72,18 +69,16 @@ const deleteLikeCard = (req, res) => {
     { new: true }
   )
     .then((card) => {
-      if (card) {
-        res.send({ data: card });
-      } else {
-        res.status(codesError.NOT_FOUND_DATA).send({
-          message: 'Переданы некорректные данные для постановки лайка',
-        });
-      }
+      res.send({ data: card });
     })
     .catch((err) => {
-      if (err instanceof mongoose.Error.CastError) {
+      if (err instanceof mongoose.Error.ValidationError) {
+        res.status(codesError.INCORRECT_DATA).send({
+          message: 'Переданы некорректные данные для постановки лайка',
+        });
+      } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
         res
-          .status(codesError.INCORRECT_DATA)
+          .status(codesError.NOT_FOUND_DATA)
           .send({ message: 'Передан несуществующий _id карточки' });
       } else {
         res.status(codesError.DEFAULT).send({ message: 'Ошибка по-умолчанию' });
