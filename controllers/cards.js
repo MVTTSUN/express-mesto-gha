@@ -42,7 +42,8 @@ const putLikeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
-    { new: true }
+    { new: true },
+    { runValidators: true }
   )
     .then((card) => {
       if (card) {
@@ -68,7 +69,8 @@ const deleteLikeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } },
-    { new: true }
+    { new: true },
+    { runValidators: true }
   )
     .then((card) => {
       if (card) {
