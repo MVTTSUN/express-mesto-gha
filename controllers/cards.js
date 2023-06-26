@@ -44,13 +44,17 @@ const putLikeCard = (req, res) => {
     { $addToSet: { likes: req.user._id } },
     { new: true }
   )
-    .then((card) => res.send({ data: card }))
-    .catch((err) => {
-      if (err instanceof mongoose.Error.ValidationError) {
+    .then((card) => {
+      if (card) {
+        res.send({ data: card });
+      } else {
         res.status(codesError.INCORRECT_DATA).send({
           message: 'Переданы некорректные данные для постановки лайка',
         });
-      } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
+      }
+    })
+    .catch((err) => {
+      if (err instanceof mongoose.Error.DocumentNotFoundError) {
         res
           .status(codesError.NOT_FOUND_DATA)
           .send({ message: 'Передан несуществующий _id карточки' });
@@ -66,13 +70,17 @@ const deleteLikeCard = (req, res) => {
     { $pull: { likes: req.user._id } },
     { new: true }
   )
-    .then((card) => res.send({ data: card }))
-    .catch((err) => {
-      if (err instanceof mongoose.Error.ValidationError) {
+    .then((card) => {
+      if (card) {
+        res.send({ data: card });
+      } else {
         res.status(codesError.INCORRECT_DATA).send({
-          message: 'Переданы некорректные данные для снятия лайка',
+          message: 'Переданы некорректные данные для постановки лайка',
         });
-      } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
+      }
+    })
+    .catch((err) => {
+      if (err instanceof mongoose.Error.DocumentNotFoundError) {
         res
           .status(codesError.NOT_FOUND_DATA)
           .send({ message: 'Передан несуществующий _id карточки' });
