@@ -24,11 +24,7 @@ const getUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        next(
-          new IncorrectError(
-            'Переданы некорректные данные при создании пользователя'
-          )
-        );
+        next(new IncorrectError('Переданы некорректные данные при создании пользователя'));
       } else {
         next(err);
       }
@@ -61,14 +57,10 @@ const postUser = (req, res, next) => {
         password: hash,
       });
     })
-    .then((user) => res.send({ user }))
+    .then((user) => res.send({ data: user }))
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
-        next(
-          new IncorrectError(
-            'Переданы некорректные данные при создании пользователя'
-          )
-        );
+        next(new IncorrectError('Переданы некорректные данные при создании пользователя'));
       } else if (err.code === 11000) {
         next(new ConflictError('Пользователь с таким email уже существует'));
       } else {
@@ -82,11 +74,7 @@ const patchUser = (req, res, data, next) => {
     .then((user) => res.send({ user }))
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
-        next(
-          new IncorrectError(
-            'Переданы некорректные данные при обновлении профиля'
-          )
-        );
+        next(new IncorrectError('Переданы некорректные данные при обновлении профиля'));
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
         next(new NotFoundDataError('Пользователь с указанным _id не найден'));
       } else {
