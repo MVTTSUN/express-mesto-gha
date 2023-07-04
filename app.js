@@ -5,7 +5,7 @@ const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 const otherRouter = require('./routes/other');
 const authRouter = require('./routes/auth');
-// const authMiddleware = require('./middlewares/auth');
+const authMiddleware = require('./middlewares/auth');
 const errorsMiddleware = require('./middlewares/errors');
 
 const { PORT = 3000 } = process.env;
@@ -19,7 +19,7 @@ app.use(express.json());
 
 app.use(authRouter);
 
-// app.use(authMiddleware);
+app.use(authMiddleware);
 app.use(userRouter);
 app.use(cardRouter);
 app.use(otherRouter);
