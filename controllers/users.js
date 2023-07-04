@@ -50,7 +50,9 @@ const postUser = (req, res, next) => {
     .hash(password, 10)
     .then((hash) => User.create({ name, about, avatar, email, password: hash }))
     .then((user) => {
-      res.send({ data: user });
+      const { ...userCurr } = user.toObject();
+      delete userCurr.password;
+      res.send({ data: userCurr });
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
