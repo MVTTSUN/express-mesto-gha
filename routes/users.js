@@ -10,7 +10,15 @@ const {
 const { LINK_REG_EXP } = require('../const');
 
 router.get('/users', getUsers);
-router.get('/users/:userId', getUser);
+router.get(
+  '/users/:userId',
+  celebrate({
+    params: Joi.object().keys({
+      userId: Joi.string().required(),
+    }),
+  }),
+  getUser
+);
 router.get('/users/me', getCurrentUser);
 router.patch(
   '/users/me',
