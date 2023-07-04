@@ -1,11 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const { errors } = require('celebrate');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 const otherRouter = require('./routes/other');
 const authRouter = require('./routes/auth');
 const authMiddleware = require('./middlewares/auth');
-const errors = require('./middlewares/errors');
+const errorsMiddleware = require('./middlewares/errors');
 
 const { PORT = 3000 } = process.env;
 
@@ -23,6 +24,7 @@ app.use(userRouter);
 app.use(cardRouter);
 app.use(otherRouter);
 
-app.use(errors);
+app.use(errors());
+app.use(errorsMiddleware);
 
 app.listen(PORT);

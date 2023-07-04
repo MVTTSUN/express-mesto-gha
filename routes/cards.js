@@ -7,7 +7,7 @@ const {
   putLikeCard,
   deleteLikeCard,
 } = require('../controllers/cards');
-const linkRegExp = require('../const');
+const { LINK_REG_EXP } = require('../const');
 
 router.get('/cards', getCards);
 router.post(
@@ -15,7 +15,7 @@ router.post(
   celebrate({
     body: Joi.object().keys({
       name: Joi.string().required().min(2).max(30),
-      link: Joi.string().required().regex(linkRegExp),
+      link: Joi.string().required().regex(LINK_REG_EXP),
     }),
   }),
   postCard
