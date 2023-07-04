@@ -57,12 +57,7 @@ const postUser = (req, res, next) => {
         password: hash,
       });
     })
-    .then((user) => {
-      const { ...userCurr } = user.toObject();
-
-      delete userCurr.password;
-      res.send({ data: userCurr });
-    })
+    .then((user) => res.status(201).send({ data: user }))
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
         next(new IncorrectError('Переданы некорректные данные при создании пользователя'));
