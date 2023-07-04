@@ -48,16 +48,10 @@ const postUser = (req, res, next) => {
 
   bcrypt
     .hash(password, 10)
-    .then((hash) => {
-      User.create({
-        name,
-        about,
-        avatar,
-        email,
-        password: hash,
-      });
+    .then((hash) => User.create({ name, about, avatar, email, password: hash }))
+    .then((user) => {
+      res.send({ data: user });
     })
-    .then((user) => res.status(201).send({ data: user }))
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
         next(new IncorrectError('Переданы некорректные данные при создании пользователя'));
