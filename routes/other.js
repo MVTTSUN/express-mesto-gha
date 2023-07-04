@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const UnauthorizedError = require('../errors/unauthorizedError');
+const NotFoundDataError = require('../errors/notFoundDataError');
 
 router.use('*', (req, res, next) => {
-  next(new UnauthorizedError('Передан некорректный путь'));
+  next(new NotFoundDataError('Передан некорректный путь'));
 });
 
 module.exports = router;
