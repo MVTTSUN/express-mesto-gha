@@ -12,11 +12,11 @@ const { LINK_REG_EXP } = require('../const');
 router.get('/users', getUsers);
 router.get(
   '/users/:userId',
-  celebrate({
-    body: Joi.object().keys({
-      userId: Joi.string().required().length(24).hex(),
-    }),
-  }),
+  // celebrate({
+  //   params: Joi.object().keys({
+  //     userId: Joi.string().required().length(24).hex(),
+  //   }),
+  // }),
   getUser
 );
 router.get('/users/me', getCurrentUser);
